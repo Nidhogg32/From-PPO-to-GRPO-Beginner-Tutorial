@@ -1,17 +1,17 @@
-site_name: From PPO to GRPO — Beginner Guide
-markdown_extensions:
-  - pymdownx.arithmatex:
-      generic: true
-extra_javascript:
-  - https://polyfill.io/v3/polyfill.min.js?features=es6
-  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+site_name: From PPO to GRPO — Beginner Tutorial
 theme:
   name: material
   language: en
 nav:
   - Home: index.md
   - 1. RL Basics: 01_RLBasics.md
-  - 2. PPO Theory: 02_PPOTheory.md
-  - 3. GRPO Theory: 03_GRPOTheory.md
-  - 4. Code Analysis: 04_CodeAnalysis.md
+  - 2. PPO Core Principles: 02_PPOTheory.md
+  - 3. GRPO Core Principles: 03_GRPOTheory.md
+  - 4. Code Walkthrough: 04_CodeAnalysis.md
   - 5. Other RL Methods: 05_OtherRLMethods.md
+markdown_extensions:
+  - pymdownx.arithmatex:
+      generic: true
+extra_javascript:
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
