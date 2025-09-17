@@ -17,17 +17,17 @@ If we model each **action** as “choosing the next token in a sentence,” then
 
 Below is a concise table summarizing the core concepts in reinforcement learning:
 
-| Term                | Definition / Formula                                                                                                  | Key Point                                                                                         |
-|---------------------|------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
-| **Action** (\(a_t\))  | At any given time, the agent can make a choice, denoted as \(a_t\).                                                   | The action space can be discrete (e.g., left/right) or continuous (e.g., steering angle).         |
-| **Reward** (\(r\))    | Immediate feedback from the environment to the agent’s action, denoted as \(r(s_t, a_t)\).                           | The goal is to maximize **long-term cumulative reward**, not just immediate rewards.              |
-| **State** (\(s_t\))   | A description of the environment at a given time, denoted as \(s_t\).                                                 | The state must contain sufficient information to support decision-making (Markov property).        |
-| **Policy** (\(\pi\))  | A rule that defines the agent’s choice of action in a state, denoted as \(\pi(a \mid s)\).                           | Can be deterministic (\(a = \pi(s)\)) or stochastic (probability distribution).                    |
-| **State Value** \(V^\pi(s)\) | Expected cumulative reward when starting from state \(s\) and following policy \(\pi\):  \(\;V^\pi(s) = \mathbb{E}_\pi \big[\sum_{t=0}^{\infty} \gamma^t r_t \mid s_0 = s\big]\) | Reflects the **long-term value** of a state. \(\gamma \in [0,1]\) is the discount factor.         |
-| **Action Value (Q function)** \(Q^\pi(s,a)\) | Expected cumulative reward when taking action \(a\) in state \(s\) and then following policy \(\pi\):  \(\;Q^\pi(s,a) = \mathbb{E}_\pi \big[\sum_{t=0}^{\infty} \gamma^t r_t \mid s_0 = s, a_0 = a\big]\) | Used to evaluate the advantage of specific actions (basis for Q-learning).                        |
-| **Optimal Policy** \(\pi^*\) | A policy that yields the maximum expected return among all possible policies.                                   | \(\pi^* = \arg \max_\pi V^\pi(s)\) for all states \(s\).                                          |
-| **Bellman Expectation Equation** | The recursive decomposition of state values:  \(\;V^\pi(s) = \sum_a \pi(a \mid s) \sum_{s'} P(s' \mid s,a)\,[r(s,a) + \gamma V^\pi(s')]\) | Shows current state value equals immediate reward + discounted future value.                      |
-| **Bellman Optimality Equation** | For the optimal policy, the value function satisfies:  \(\;V^*(s) = \max_a \sum_{s'} P(s' \mid s,a)\,[r(s,a) + \gamma V^*(s')]\) | By recursively choosing the best action, we directly solve for the optimal value function.         |
+| Term | Definition / Formula | Key Points |
+|---|---|---|
+| **Action** | A choice the agent can make at a given time; denote as \(a\) (or \(a_t\)). | Action space can be **discrete** (e.g., up/down/left/right) or **continuous** (e.g., steering angle). |
+| **Reward** | Immediate feedback from the environment to the agent’s action; denote as \(r(s,a)\). | The goal is to **maximize long-term cumulative reward**, not just immediate rewards. |
+| **State** | A description of the environment at a given time; denote as \(s\). | The state must contain sufficient information to support decision-making (**Markov property**). |
+| **Policy** | The rule for selecting an action in state \(s\); denote as \(\pi(a \mid s)\). | Can be **deterministic** \((a=\pi(s))\) or **stochastic** (a probability distribution). |
+| **State Value** | Expected return from state \(s\) following policy \(\pi\):  \(\displaystyle V^\pi(s)=\mathbb{E}_\pi\!\left[\sum_{t=0}^{\infty}\gamma^{t} r_t \,\middle|\, s_0=s\right]\). | Reflects long-term value of a state; \(\gamma \in [0,1]\) is the **discount factor**. |
+| **Q Function (Action Value)** | Expected return after taking action \(a\) in state \(s\) and then following \(\pi\):  \(\displaystyle Q^\pi(s,a)=\mathbb{E}_\pi\!\left[\sum_{t=0}^{\infty}\gamma^{t} r_t \,\middle|\, s_0=s,\, a_0=a\right]\). | Used to evaluate the **quality of a specific action** (e.g., Q-learning). |
+| **Optimal Policy** | Among all policies, the one that maximizes expected cumulative reward; denote as \(\pi^*\). | Satisfies \(\displaystyle \pi^*=\arg\max_{\pi} V^\pi(s)\) for all states \(s\). |
+| **Bellman Expectation Equation** | \(\displaystyle V^\pi(s)=\sum_a \pi(a\mid s)\sum_{s'} P(s'\mid s,a)\,[\,r(s,a)+\gamma V^\pi(s')\,]\). | Current state value equals **immediate reward + discounted value** of successor states. |
+| **Bellman Optimality Equation** | \(\displaystyle V^*(s)=\max_a \sum_{s'} P(s'\mid s,a)\,[\,r(s,a)+\gamma V^*(s')\,]\). | By recursively maximizing over actions, directly solves the **optimal value function** (e.g., value iteration). |
 
 
 ---
