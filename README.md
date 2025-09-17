@@ -1,7 +1,5 @@
 # From PPO to GRPO — A Beginner Guide
 
-📖 **Online Tutorial**: [View the full documentation here](https://nidhogg32.github.io/From-PPO-to-GRPO-Beginner-Tutorial/)
-
 *A readable, step-by-step tutorial that takes newcomers from Reinforcement Learning (RL) basics to PPO and then to GRPO.  
 This repository is **documentation only** (text and figures). No runtime environment or training code is provided.*
 
