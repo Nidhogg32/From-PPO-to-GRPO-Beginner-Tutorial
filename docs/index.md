@@ -6,6 +6,8 @@ Target audience: learners with a deep learning background + knowledge of advance
 Recommended Introductory Notes
 Highly recommended: the Large Model Preference Alignment series!
 - [Recommended articles for beginners](articles.md)
-#Table of contents：#
+
+##Table of contents：
+
 [1. RL Basics](01_RLBasics.md)
 [2. PPO Core](02_PPOTheory.md)
