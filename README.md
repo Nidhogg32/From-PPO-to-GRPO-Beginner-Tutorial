@@ -87,3 +87,6 @@ If these notes help your study or teaching, please cite:
   url   = {https://github.com/<your-name>/<your-repo>}
 }
 
+## Acknowledgements
+These notes synthesize ideas from the broader RL and LLM-RLHF communities and highlight practices seen in projects such as Gymnasium, PyTorch, and TRL. All trademarks and project names belong to their respective owners.
+
