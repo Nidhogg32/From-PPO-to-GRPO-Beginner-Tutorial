@@ -16,5 +16,5 @@ Highly recommended: the Large Model Preference Alignment series!
 - [Mengyuan: OpenAI o1 Tech Insights (3): How to Give Models Self-Correction Abilities](https://zhuanlan.zhihu.com/p/905620136)
 - [Mengyuan: Notes on Understanding DeepSeek-R1](https://zhuanlan.zhihu.com/p/19843230707)
 
-- [1. RL Basics](01_RLBasics.html)
+- [1. RL Basics](01_RLBasics.md)
 - [2. PPO Core](02_PPOTheory.html)
