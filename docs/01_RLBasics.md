@@ -117,12 +117,10 @@ $$
 - Let's do some generalization derivation on the policy gradient formula to facilitate critic modeling:
 
 $$
-\nabla_{\theta} J(\theta) \propto
-\mathbb{E}_{x \sim D^{\pi_{\theta}},\, a \sim \pi_{\theta}(\cdot \mid x)}
-\!\left[q_{\pi_{\theta}}(x,a)\, \nabla_{\theta}\log \pi_{\theta}(a \mid x)\right]
-\propto
-\mathbb{E}_{\pi_{\theta}}
-\!\left[\sum_{t=0}^{T} \psi_{t}\, \nabla_{\theta}\log \pi_{\theta}(a_{t} \mid s_{t})\right].
+\begin{aligned}
+\nabla_{\theta} J(\theta) \ \ \ \   & \propto \underset{\substack{x \sim D^{\pi_{\theta}} \\
+a \sim \pi_{\theta}(a \mid x)}}{\mathbb{E}}\left[q_{\pi_{\theta}}(x, a) \nabla \log \pi_{\theta}(a \mid x)\right] \\ & \propto \ \ \ \ \mathbb{E}_{\pi_{\theta}}\left[\sum_{t=0}^{T} \psi_{t} \nabla_{\theta} \log \pi_{\theta}\left(a_{t} \mid s_{t}\right)\right]
+\end{aligned}
 $$
 
 
