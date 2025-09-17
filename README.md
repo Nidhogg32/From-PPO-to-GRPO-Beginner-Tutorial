@@ -46,9 +46,9 @@ This repository is **documentation only** (text and figures). No runtime environ
    3.4 Strengths and Representative Results
 
 4. **Code Walkthrough**  
-   4.1 Open-source implementations (e.g., **TRL**)  
-   &nbsp;&nbsp;&nbsp;&nbsp;4.1.1 PPO in TRL  
-   &nbsp;&nbsp;&nbsp;&nbsp;4.1.2 GRPO in TRL  
+   4.1 Open-source implementations (by trl)  
+   &nbsp;&nbsp;&nbsp;&nbsp;4.1.1 Code of PPO  
+   &nbsp;&nbsp;&nbsp;&nbsp;4.1.2 Code of GRPO  
    4.2 Notes on other libraries  
    4.3 Pseudocode / minimal sketches (for understanding only)
 
