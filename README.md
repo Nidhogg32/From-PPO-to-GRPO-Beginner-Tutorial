@@ -79,3 +79,11 @@ Please keep contributions concise and aligned with the beginner-friendly tone.
 ## Citation
 If these notes help your study or teaching, please cite:
 
+```bibtex
+@misc{ppo_to_grpo_notes,
+  title = {From {PPO} to {GRPO} — A Beginner Guide},
+  year  = {2025},
+  note  = {Documentation-only tutorial},
+  url   = {https://github.com/<your-name>/<your-repo>}
+}
+
