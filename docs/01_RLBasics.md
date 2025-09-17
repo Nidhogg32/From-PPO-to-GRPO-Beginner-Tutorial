@@ -55,9 +55,7 @@ we iteratively approach the optimal policy. This is the foundation of **policy g
 
 The basic policy gradient formula can be written as:
 
-$$
 \nabla_{\theta} J(\theta)=\sum_{t=0}^{\infty} \sum_{s_{t}} \operatorname{Pr}\left(s_{0} \rightarrow s_{t}, t, \pi_{\theta}\right) \sum_{a_{t}} \pi_{\theta}\left(a_{t} \mid s_{t}\right)\left[\gamma^{t} q_{\pi_{\theta}}\left(s_{t}, a_{t}\right) \nabla \log \pi_{\theta}\left(a_{t} \mid s_{t}\right)\right]
-$$
 
 where $\Pr^{\pi_\theta}(s_0 \to s_t)$ is the probability of reaching state $s_t$ from $s_0$ under policy $\pi_\theta$.
 
