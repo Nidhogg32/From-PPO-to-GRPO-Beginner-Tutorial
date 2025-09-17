@@ -106,19 +106,20 @@ $$
 
 ## 1.3.4 Limitations of Policy Gradient
 
-- High variance in gradient estimates → mitigated by baselines or advantage functions.  
-- Low sample efficiency → improved by methods like PPO and A3C with constrained updates.  
+- The variance of gradient estimation is high. In the future, it may be necessary to combine it with a baseline or advantage function to reduce the variance.
+- Relies on a large number of samples and has low efficiency (improved methods such as PPO and A3C improve stability by constraining policy updates).
 
 ---
 
 ## 1.4 Actor–Critic Algorithms
 
-REINFORCE directly uses observed returns $Q$ for updates, which is inefficient. A natural generalization: train a **Critic** (neural network) to estimate $Q$. The Critic evaluates state–action values, while the Actor updates the policy.
-
-Generalized policy gradient formulation:
-
+- As mentioned earlier, REINFORCE uses the observed discounted reward trajectory Q, which somewhat reduces computational efficiency. A more general approach is to consider estimating Q using other methods, such as neural networks. The answer is yes! This model for estimating Q is called a critic model, and it evaluates the value of state actions.
+- Let's do some generalization derivation on the policy gradient formula to facilitate critic modeling:
 $$
-\nabla_{\theta} J(\theta) \propto \mathbb{E}_{\pi_\theta}[q^{\pi_\theta}(s, a)\nabla_{\theta} \log \pi_\theta(a \mid s)].
+\begin{aligned}
+\nabla_{\theta} J(\theta) \ \ \ \   & \propto \underset{\substack{x \sim D^{\pi_{\theta}} \\
+a \sim \pi_{\theta}(a \mid x)}}{\mathbb{E}}\left[q_{\pi_{\theta}}(x, a) \nabla \log \pi_{\theta}(a \mid x)\right] \\ & \propto \ \ \ \ \mathbb{E}_{\pi_{\theta}}\left[\sum_{t=0}^{T} \psi_{t} \nabla_{\theta} \log \pi_{\theta}\left(a_{t} \mid s_{t}\right)\right]
+\end{aligned}
 $$
 
 Different instantiations include:
