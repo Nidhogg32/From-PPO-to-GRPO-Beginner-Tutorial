@@ -64,11 +64,23 @@ $$
 
 where $\Pr^{\pi_\theta}(s_0 \to s_t)$ is the probability of reaching state $s_t$ from $s_0$ under policy $\pi_\theta$.
 
-Further simplification yields:
+Further deduction yields:
 
 $$
-\nabla_{\theta} J(\theta) 
-= \frac{1}{1 - \gamma} \mathbb{E}_{x \sim D^{\pi_{\theta}}, a \sim \pi_{\theta}}[q^{\pi_{\theta}}(x, a) \nabla_{\theta} \log \pi_{\theta}(a \mid x)].
+
+\begin{aligned}
+\nabla_{\theta} J(\theta) & =\sum_{t=0}^{\infty} \sum_{s_{t}} \operatorname{Pr}\left(s_{0} \rightarrow s_{t}, t, \pi_{\theta}\right) \sum_{a_{t}} \pi_{\theta}\left(a_{t} \mid s_{t}\right)\left[\gamma^{t} q_{\pi_{\theta}}\left(s_{t}, a_{t}\right) \nabla \log \pi_{\theta}\left(a_{t} \mid s_{t}\right)\right] \\
+& =\sum_{t=0}^{\infty} \sum_{s_{t}} \gamma^{t} \operatorname{Pr}\left(s_{0} \rightarrow s_{t}, t, \pi_{\theta}\right) \sum_{a_{t}} \pi_{\theta}\left(a_{t} \mid s_{t}\right)\left[q_{\pi_{\theta}}\left(s_{t}, a_{t}\right) \nabla \log \pi_{\theta}\left(a_{t} \mid s_{t}\right)\right] \\
+& =\sum_{x \in \mathcal{S}} \sum_{t=0}^{\infty} \gamma^{t} \operatorname{Pr}\left(s_{0} \rightarrow x, t, \pi_{\theta}\right) \sum_{a} \pi_{\theta}(a \mid x)\left[q_{\pi_{\theta}}(x, a) \nabla \log \pi_{\theta}(a \mid x)\right] \\
+& =\sum_{x \in \mathcal{S}} d^{\pi_{\theta}}(x) \sum_{a} \pi_{\theta}(a \mid x)\left[q_{\pi_{\theta}}(x, a) \nabla \log \pi_{\theta}(a \mid x)\right] \\
+& =\frac{1}{1-\gamma} \sum_{x \in \mathcal{S}}(1-\gamma) d^{\pi_{\theta}}(x) \sum_{a} \pi_{\theta}(a \mid x)\left[q_{\pi_{\theta}}(x, a) \nabla \log \pi_{\theta}(a \mid x)\right] \\
+& =\frac{1}{1-\gamma} \sum_{x \in \mathcal{S}} D^{\pi_{\theta}}(x) \sum_{a} \pi_{\theta}(a \mid x)\left[q_{\pi_{\theta}}(x, a) \nabla \log \pi_{\theta}(a \mid x)\right] \\
+& =\frac{1}{1-\gamma} \underset{\substack{x \sim D^{\pi_{\theta}} \\
+a \sim \pi_{\theta}(a \mid x)}}{\mathbb{E}}\left[q_{\pi_{\theta}}(x, a) \nabla \log \pi_{\theta}(a \mid x)\right] \\
+& \propto \underset{\substack{x \sim D^{\pi_{\theta}} \\
+a \sim \pi_{\theta}(a \mid x)}}{\mathbb{E}}\left[q_{\pi_{\theta}}(x, a) \nabla \log \pi_{\theta}(a \mid x)\right]
+
+\end{aligned}
 $$
 
 > **Note:** The advantage function $A(s, a) = Q(s, a) - V(s)$ reduces variance by subtracting a baseline $V(s)$.  
