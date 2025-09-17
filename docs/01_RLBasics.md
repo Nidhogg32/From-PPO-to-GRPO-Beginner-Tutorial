@@ -115,6 +115,7 @@ $$
 
 - As mentioned earlier, REINFORCE uses the observed discounted reward trajectory Q, which somewhat reduces computational efficiency. A more general approach is to consider estimating Q using other methods, such as neural networks. The answer is yes! This model for estimating Q is called a critic model, and it evaluates the value of state actions.
 - Let's do some generalization derivation on the policy gradient formula to facilitate critic modeling:
+
 $$
 \nabla_{\theta} J(\theta) \propto
 \mathbb{E}_{x \sim D^{\pi_{\theta}},\, a \sim \pi_{\theta}(\cdot \mid x)}
