@@ -97,7 +97,7 @@ $$
 ## 1.3.3 A Concrete Example: REINFORCE
 
 - The simplest example of a policy gradient algorithm is the Monte Carlo Policy Gradient (REINFORCE), which uses the Monte Carlo method to estimate the Q function:
-- 1.Use Current Strategy {\pi_\theta}
+- 1.Use Current Strategy $\pi_\theta$
 
 
 ---
