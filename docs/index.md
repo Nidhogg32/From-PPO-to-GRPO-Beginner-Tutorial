@@ -1,8 +1,6 @@
-From PPO to GRPO
-
 Reading this tutorial requires no prior knowledge of Reinforcement Learning — the focus is on being friendly and approachable!
 Estimated reading time: 15 minutes+
-If you find any mistakes, please contact Lin Jinghao for corrections.
+If you find any mistakes, please contact us for corrections.
 Target audience: learners with a deep learning background + knowledge of advanced mathematics.
 
 Recommended Introductory Notes
