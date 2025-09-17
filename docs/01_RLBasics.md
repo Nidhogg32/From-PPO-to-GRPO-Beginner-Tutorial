@@ -41,8 +41,7 @@ The goal of RL is to solve for an optimal policy $\pi^*(a \mid s)$ that maximize
 Suppose the policy $\pi$ is parameterized by $\theta$ (e.g., neural network weights), written as $\pi(a \mid s; \theta)$, abbreviated $\pi_\theta$. The objective is to find optimal parameters $\theta^*$ that maximize:
 
 $$
-J(\theta) = \mathbb{E}_{\pi_\theta}\Big[\sum_{t=0}^{\infty} \gamma^t r(s_t, a_t)\Big] 
-= \mathbb{E}_{s_0 \sim V^{\pi_\theta}(s_0)}[V^{\pi_\theta}(s_0)].
+J(\theta) = \mathbb{E}_{\pi_\theta} \left[ \sum_{t=0}^\infty \gamma^t r(s_t, a_t) \right] = \mathbb{E}_{s_0} \left[ V^{\pi_{\theta}}(s_{0})\right]
 $$
 
 By computing the gradient $\nabla_\theta J(\theta)$ and updating via gradient ascent:  
