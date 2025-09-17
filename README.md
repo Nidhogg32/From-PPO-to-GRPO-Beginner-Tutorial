@@ -71,7 +71,7 @@ Please keep contributions concise and aligned with the beginner-friendly tone.
 ---
 
 ## License
-- **Documentation & images**: CC BY 4.0 (attribution required).  
+- **Documentation & images**:  Apache-2.0 license.  
 - Any short code snippets included for illustration are provided under a permissive license (e.g., Apache-2.0 or MIT) and are clearly marked in context.
 
 ---
