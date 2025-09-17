@@ -1,0 +1,764 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../02_PPOTheory/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>1. RL Basics - From PPO to GRPO — Beginner Tutorial</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.e53b48f4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-rl-basics" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="From PPO to GRPO — Beginner Tutorial" class="md-header__button md-logo" aria-label="From PPO to GRPO — Beginner Tutorial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            From PPO to GRPO — Beginner Tutorial
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1. RL Basics
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="From PPO to GRPO — Beginner Tutorial" class="md-nav__button md-logo" aria-label="From PPO to GRPO — Beginner Tutorial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    From PPO to GRPO — Beginner Tutorial
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    1. RL Basics
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    1. RL Basics
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#11-what-is-rl" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 What is RL?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-basic-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 Basic Concepts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-policy-gradient" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 Policy Gradient
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.3 Policy Gradient">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3.1 Background
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-derivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3.2 Derivation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#133-a-concrete-example-reinforce" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3.3 A Concrete Example: REINFORCE
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#134-limitations-of-policy-gradient" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3.4 Limitations of Policy Gradient
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-actorcritic-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4 Actor–Critic Algorithms
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02_PPOTheory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2. PPO Core Principles
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03_GRPOTheory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    3. GRPO Core Principles
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04_CodeAnalysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    4. Code Walkthrough
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05_OtherRLMethods/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    5. Other RL Methods
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#11-what-is-rl" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 What is RL?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-basic-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 Basic Concepts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-policy-gradient" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 Policy Gradient
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.3 Policy Gradient">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3.1 Background
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-derivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3.2 Derivation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#133-a-concrete-example-reinforce" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3.3 A Concrete Example: REINFORCE
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#134-limitations-of-policy-gradient" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3.4 Limitations of Policy Gradient
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-actorcritic-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4 Actor–Critic Algorithms
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="1-rl-basics">1. RL Basics</h1>
+<h2 id="11-what-is-rl">1.1 What is RL?</h2>
+<p>Reinforcement Learning (RL) aims to answer the question: <strong>how can an agent learn the best behavior in a complex environment by trying different actions and adjusting based on rewards</strong>? By continuous trial and error, the agent gradually learns a decision-making strategy that maximizes cumulative rewards (returns).</p>
+<p>Compared with classical supervised learning:<br />
+- <strong>Supervised learning</strong> learns a mapping from features to labels by fitting the data distribution.<br />
+- <strong>RL</strong>, on the other hand, emphasizes learning from <strong>interaction with the environment</strong>, optimizing the agent’s policy to maximize long-term rewards.  </p>
+<p>How does RL help LLMs?<br />
+If we model each <strong>action</strong> as “choosing the next token in a sentence,” then <strong>LLM text generation</strong> becomes a sequential decision problem. Thus, RL can be applied to optimize LLMs.</p>
+<hr />
+<h2 id="12-basic-concepts">1.2 Basic Concepts</h2>
+<p>Below is a concise table summarizing the core concepts in reinforcement learning:</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Definition / Formula</th>
+<th>Key Point</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Action</strong> (<span class="arithmatex">\(a_t\)</span>)</td>
+<td>At any given time, the agent can make a choice, denoted as <span class="arithmatex">\(a_t\)</span>.</td>
+<td>The action space can be discrete (e.g., left/right) or continuous (e.g., steering angle).</td>
+</tr>
+<tr>
+<td><strong>Reward</strong> (<span class="arithmatex">\(r\)</span>)</td>
+<td>Immediate feedback from the environment to the agent’s action, denoted as <span class="arithmatex">\(r(s_t, a_t)\)</span>.</td>
+<td>The goal is to maximize <strong>long-term cumulative reward</strong>, not just immediate rewards.</td>
+</tr>
+<tr>
+<td><strong>State</strong> (<span class="arithmatex">\(s_t\)</span>)</td>
+<td>A description of the environment at a given time, denoted as <span class="arithmatex">\(s_t\)</span>.</td>
+<td>The state must contain sufficient information to support decision-making (Markov property).</td>
+</tr>
+<tr>
+<td><strong>Policy</strong> (<span class="arithmatex">\(\pi\)</span>)</td>
+<td>A rule that defines the agent’s choice of action in a state, denoted as <span class="arithmatex">\(\pi(a \mid s)\)</span>.</td>
+<td>Can be deterministic (<span class="arithmatex">\(a = \pi(s)\)</span>) or stochastic (probability distribution).</td>
+</tr>
+<tr>
+<td><strong>State Value</strong> <span class="arithmatex">\(V^\pi(s)\)</span></td>
+<td>Expected cumulative reward when starting from state <span class="arithmatex">\(s\)</span> and following policy <span class="arithmatex">\(\pi\)</span>:  <span class="arithmatex">\(<span class="arithmatex">\(V^\pi(s) = \mathbb{E}_\pi \Big[\sum_{t=0}^{\infty} \gamma^t r_t \mid s_0 = s\Big]\)</span>\)</span></td>
+<td>Reflects the <strong>long-term value</strong> of a state. <span class="arithmatex">\(\gamma \in [0,1]\)</span> is the discount factor.</td>
+</tr>
+<tr>
+<td><strong>Action Value (Q function)</strong> <span class="arithmatex">\(Q^\pi(s,a)\)</span></td>
+<td>Expected cumulative reward when taking action <span class="arithmatex">\(a\)</span> in state <span class="arithmatex">\(s\)</span> and then following policy <span class="arithmatex">\(\pi\)</span>:  <span class="arithmatex">\(<span class="arithmatex">\(Q^\pi(s,a) = \mathbb{E}_\pi \Big[\sum_{t=0}^{\infty} \gamma^t r_t \mid s_0 = s, a_0 = a\Big]\)</span>\)</span></td>
+<td>Used to evaluate the advantage of specific actions (basis for Q-learning).</td>
+</tr>
+<tr>
+<td><strong>Optimal Policy</strong> <span class="arithmatex">\(\pi^*\)</span></td>
+<td>A policy that yields the maximum expected return among all possible policies.</td>
+<td><span class="arithmatex">\(\pi^* = \arg \max_\pi V^\pi(s)\)</span> for all states <span class="arithmatex">\(s\)</span>.</td>
+</tr>
+<tr>
+<td><strong>Bellman Expectation Equation</strong></td>
+<td>The recursive decomposition of state values:  <span class="arithmatex">\(<span class="arithmatex">\(V^\pi(s) = \sum_a \pi(a \mid s) \sum_{s'} P(s' \mid s,a)[r(s,a) + \gamma V^\pi(s')]\)</span>\)</span></td>
+<td>Shows current state value equals immediate reward + discounted future value.</td>
+</tr>
+<tr>
+<td><strong>Bellman Optimality Equation</strong></td>
+<td>For the optimal policy, the value function satisfies:  <span class="arithmatex">\(<span class="arithmatex">\(V^*(s) = \max_a \sum_{s'} P(s' \mid s,a)[r(s,a) + \gamma V^*(s')]\)</span>\)</span></td>
+<td>By recursively choosing the best action, we directly solve for the optimal value function.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="13-policy-gradient">1.3 Policy Gradient</h2>
+<h3 id="131-background">1.3.1 Background</h3>
+<p>The goal of RL is to solve for an optimal policy <span class="arithmatex">\(\pi^*(a \mid s)\)</span> that maximizes expected cumulative rewards. This can be framed as an optimization problem, solvable by gradient-based methods.</p>
+<p>Suppose the policy <span class="arithmatex">\(\pi\)</span> is parameterized by <span class="arithmatex">\(\theta\)</span> (e.g., neural network weights), written as <span class="arithmatex">\(\pi(a \mid s; \theta)\)</span>, abbreviated <span class="arithmatex">\(\pi_\theta\)</span>. The objective is to find optimal parameters <span class="arithmatex">\(\theta^*\)</span> that maximize:</p>
+<div class="arithmatex">\[
+J(\theta) = \mathbb{E}_{\pi_\theta}\Big[\sum_{t=0}^{\infty} \gamma^t r(s_t, a_t)\Big] 
+= \mathbb{E}_{s_0 \sim V^{\pi_\theta}(s_0)}[V^{\pi_\theta}(s_0)].
+\]</div>
+<p>By computing the gradient <span class="arithmatex">\(\nabla_\theta J(\theta)\)</span> and updating via gradient ascent:<br />
+<span class="arithmatex">\(\theta \leftarrow \theta + \alpha \nabla_\theta J(\theta)\)</span>,<br />
+we iteratively approach the optimal policy. This is the foundation of <strong>policy gradient methods</strong>.</p>
+<hr />
+<h3 id="132-derivation">1.3.2 Derivation</h3>
+<p>The basic policy gradient formula can be written as:</p>
+<div class="arithmatex">\[
+\nabla_{\theta} J(\theta) = \sum_{t=0}^{\infty} \Pr^{\pi_{\theta}}(s_0 \to s_t)\sum_{a_t} \pi_{\theta}(a_t \mid s_t) \gamma^t q^{\pi_{\theta}}(s_t, a_t) \nabla_{\theta} \log \pi_{\theta}(a_t \mid s_t).
+\]</div>
+<p>where <span class="arithmatex">\(\Pr^{\pi_\theta}(s_0 \to s_t)\)</span> is the probability of reaching state <span class="arithmatex">\(s_t\)</span> from <span class="arithmatex">\(s_0\)</span> under policy <span class="arithmatex">\(\pi_\theta\)</span>.</p>
+<p>Further simplification yields:</p>
+<div class="arithmatex">\[
+\nabla_{\theta} J(\theta) 
+= \frac{1}{1 - \gamma} \mathbb{E}_{x \sim D^{\pi_{\theta}}, a \sim \pi_{\theta}}[q^{\pi_{\theta}}(x, a) \nabla_{\theta} \log \pi_{\theta}(a \mid x)].
+\]</div>
+<blockquote>
+<p><strong>Note:</strong> The advantage function <span class="arithmatex">\(A(s, a) = Q(s, a) - V(s)\)</span> reduces variance by subtracting a baseline <span class="arithmatex">\(V(s)\)</span>.<br />
+Temporal-Difference (TD) error provides a practical approximation:<br />
+<span class="arithmatex">\(\delta_t = r_t + \gamma V^{\pi_\theta}(s_{t+1}) - V^{\pi_\theta}(s_t)\)</span>.</p>
+</blockquote>
+<hr />
+<h2 id="133-a-concrete-example-reinforce">1.3.3 A Concrete Example: REINFORCE</h2>
+<p><em>(Details of REINFORCE implementation can be added here.)</em></p>
+<hr />
+<h2 id="134-limitations-of-policy-gradient">1.3.4 Limitations of Policy Gradient</h2>
+<ul>
+<li>High variance in gradient estimates → mitigated by baselines or advantage functions.  </li>
+<li>Low sample efficiency → improved by methods like PPO and A3C with constrained updates.  </li>
+</ul>
+<hr />
+<h2 id="14-actorcritic-algorithms">1.4 Actor–Critic Algorithms</h2>
+<p>REINFORCE directly uses observed returns <span class="arithmatex">\(Q\)</span> for updates, which is inefficient. A natural generalization: train a <strong>Critic</strong> (neural network) to estimate <span class="arithmatex">\(Q\)</span>. The Critic evaluates state–action values, while the Actor updates the policy.</p>
+<p>Generalized policy gradient formulation:</p>
+<div class="arithmatex">\[
+\nabla_{\theta} J(\theta) \propto \mathbb{E}_{\pi_\theta}[q^{\pi_\theta}(s, a)\nabla_{\theta} \log \pi_\theta(a \mid s)].
+\]</div>
+<p>Different instantiations include:
+- <strong>REINFORCE:</strong> uses full return <span class="arithmatex">\(Q\)</span><br />
+- <strong>Q Actor–Critic:</strong> uses estimated <span class="arithmatex">\(Q(s, a)\)</span><br />
+- <strong>Advantage Actor–Critic (A2C):</strong> uses <span class="arithmatex">\(A(s, a)\)</span><br />
+- <strong>TD Actor–Critic:</strong> uses TD error <span class="arithmatex">\(\delta\)</span></p>
+<blockquote>
+<p><strong>Note:</strong> Advantage reduces variance by centering around a baseline <span class="arithmatex">\(V(s)\)</span>. TD error <span class="arithmatex">\(\delta_t = r_t + \gamma V(s_{t+1}) - V(s_t)\)</span> avoids direct Q-learning bias.</p>
+</blockquote>
+<hr />
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://www.davidsilver.uk/wp-content/uploads/2020/03/pg.pdf">David Silver’s RL Course Lecture 7: Policy Gradient (PDF)</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
