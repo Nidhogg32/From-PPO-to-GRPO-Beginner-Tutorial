@@ -116,14 +116,14 @@ $$
 - As mentioned earlier, REINFORCE uses the observed discounted reward trajectory Q, which somewhat reduces computational efficiency. A more general approach is to consider estimating Q using other methods, such as neural networks. The answer is yes! This model for estimating Q is called a critic model, and it evaluates the value of state actions.
 - Let's do some generalization derivation on the policy gradient formula to facilitate critic modeling:
 $$
-\begin{aligned}
-\nabla_{\theta} J(\theta)
-&\propto \mathbb{E}_{\substack{x \sim D^{\pi_{\theta}} \\ a \sim \pi_{\theta}(\cdot \mid x)}}
-\!\left[q_{\pi_{\theta}}(x, a)\, \nabla_{\theta}\log \pi_{\theta}(a \mid x)\right] \\
-&\propto \mathbb{E}_{\pi_{\theta}}
-\!\left[\sum_{t=0}^{T} \psi_{t}\, \nabla_{\theta}\log \pi_{\theta}(a_{t} \mid s_{t})\right]
-\end{aligned}
+\nabla_{\theta} J(\theta) \propto
+\mathbb{E}_{x \sim D^{\pi_{\theta}},\, a \sim \pi_{\theta}(\cdot \mid x)}
+\!\left[q_{\pi_{\theta}}(x,a)\, \nabla_{\theta}\log \pi_{\theta}(a \mid x)\right]
+\propto
+\mathbb{E}_{\pi_{\theta}}
+\!\left[\sum_{t=0}^{T} \psi_{t}\, \nabla_{\theta}\log \pi_{\theta}(a_{t} \mid s_{t})\right].
 $$
+
 
 
 Different instantiations include:
