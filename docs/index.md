@@ -7,14 +7,6 @@ Recommended Introductory Notes
 
 Highly recommended: the Large Model Preference Alignment series!
 
-- [Mengyuan: Illustrated RLHF for Large Models — PPO Principles and Source Code Explained for Everyone](https://zhuanlan.zhihu.com/p/677607581)
-- [Mengyuan: RLHF-PPO Theory Explained for Everyone](https://zhuanlan.zhihu.com/p/7461863937)
-- [Mengyuan: Illustrated OpenRLHF with Ray-Based Distributed Training Process](https://zhuanlan.zhihu.com/p/12871616401)
-- [Mengyuan: DPO Mathematical Principles Explained for Everyone](https://zhuanlan.zhihu.com/p/721073733)
-- [Mengyuan: OpenAI o1 Tech Insights (1): Overall Framework, Using Test-Time Scaling Law to Improve Logical Reasoning](https://zhuanlan.zhihu.com/p/773907223)
-- [Mengyuan: OpenAI o1 Tech Insights (2): Enhancing Reasoning with MCTS (Code-Based Walkthrough](https://zhuanlan.zhihu.com/p/864190605)
-- [Mengyuan: OpenAI o1 Tech Insights (3): How to Give Models Self-Correction Abilities](https://zhuanlan.zhihu.com/p/905620136)
-- [Mengyuan: Notes on Understanding DeepSeek-R1](https://zhuanlan.zhihu.com/p/19843230707)
 
 - [1. RL Basics](01_RLBasics.md)
 - [2. PPO Core](02_PPOTheory.html)
