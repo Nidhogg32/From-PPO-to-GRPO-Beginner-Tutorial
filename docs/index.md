@@ -11,4 +11,5 @@ Recommended Introductory Notes
 ## Table of contents：
 
 [1. RL Basics](01_RLBasics.md)
+
 [2. PPO Core](02_PPOTheory.md)
